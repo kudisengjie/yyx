@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>营养学官网 - 健康生活，从营养开始</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* 导航栏样式 */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #3498db;
+        }
+
+        /* 首页横幅样式 */
+        .banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 2rem;
+        }
+
+        .banner h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .banner p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            background-color: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 通用部分样式 */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+        }
+
+        /* 关于我们部分 */
+        .about {
+            background-color: #f8f9fa;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 营养知识部分 */
+        .nutrition-knowledge {
+            background-color: white;
+        }
+
+        .knowledge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .knowledge-card {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .knowledge-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .knowledge-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 服务项目部分 */
+        .services {
+            background-color: #f8f9fa;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 专家团队部分 */
+        .experts {
+            background-color: white;
+        }
+
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .expert-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .expert-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .expert-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+        }
+
+        .expert-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .expert-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .expert-card .title {
+            color: #3498db;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .expert-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 客户评价部分 */
+        .testimonials {
+            background-color: #f8f9fa;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card .quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-card .author {
+            text-align: right;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        /* 联系我们部分 */
+        .contact {
+            background-color: white;
+        }
+
+        .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #3498db;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #3498db;
+        }
+
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background-color: #3498db;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: #34495e;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: #3498db;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* 动画效果 */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .banner h1 {
+                font-size: 2.5rem;
+            }
+
+            .banner p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <nav>
+            <div class="logo">营养学官网</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#knowledge">营养知识</a></li>
+                <li><a href="#services">服务项目</a></li>
+                <li><a href="#experts">专家团队</a></li>
+                <li><a href="#testimonials">客户评价</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- 首页横幅 -->
+    <section id="home" class="banner">
+        <h1>健康生活，从营养开始</h1>
+        <p>专业的营养指导，科学的饮食建议，让您拥有健康的身体和美好的生活</p>
+        <a href="#services" class="cta-button">了解我们的服务</a>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="section about">
+        <h2 class="section-title">关于我们</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>我们的使命</h3>
+                <p>营养学官网致力于传播科学的营养知识，提供专业的营养咨询服务，帮助人们建立健康的饮食习惯，提高生活质量。</p>
+                <p>我们拥有一支由资深营养师组成的专业团队，他们具有丰富的临床经验和深厚的专业知识，能够为不同年龄段、不同健康状况的人群提供个性化的营养方案。</p>
+                <p>我们的目标是成为中国最具影响力的营养学平台，让更多的人了解营养、重视营养，从而拥有健康的身体和美好的生活。</p>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="营养学团队">
+            </div>
+        </div>
+    </section>
+
+    <!-- 营养知识 -->
+    <section id="knowledge" class="section nutrition-knowledge">
+        <h2 class="section-title">营养知识</h2>
+        <div class="knowledge-grid">
+            <div class="knowledge-card">
+                <h3>均衡饮食的重要性</h3>
+                <p>均衡饮食是指摄入各类营养素的量和比例适宜，能够满足人体正常生理功能的需要。它包括谷物、蔬菜、水果、肉类、蛋类、奶类、豆类等多种食物的合理搭配。</p>
+            </div>
+            <div class="knowledge-card">
+                <h3>蛋白质的作用</h3>
+                <p>蛋白质是构成人体组织的重要成分，参与身体的各种生理活动。它能够促进生长发育、修复组织损伤、增强免疫力、调节生理功能等。</p>
+            </div>
+            <div class="knowledge-card">
+                <h3>膳食纤维的益处</h3>
+                <p>膳食纤维能够促进肠道蠕动，预防便秘；降低胆固醇水平，预防心血管疾病；控制血糖，预防糖尿病；增加饱腹感，帮助控制体重。</p>
+            </div>
+            <div class="knowledge-card">
+                <h3>维生素的功能</h3>
+                <p>维生素是维持人体正常生理功能所必需的有机化合物。不同的维生素具有不同的功能，如维生素A保护视力，维生素C增强免疫力，维生素D促进钙吸收等。</p>
+            </div>
+            <div class="knowledge-card">
+                <h3>矿物质的作用</h3>
+                <p>矿物质是构成人体组织和维持正常生理功能所必需的无机化合物。如钙是构成骨骼和牙齿的主要成分，铁是合成血红蛋白的重要原料，锌能够促进生长发育和免疫功能。</p>
+            </div>
+            <div class="knowledge-card">
+                <h3>水分的重要性</h3>
+                <p>水是人体的重要组成部分，参与身体的各种生理活动。它能够运输营养物质和代谢废物，调节体温，润滑关节，维持细胞的正常形态和功能。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务项目 -->
+    <section id="services" class="section services">
+        <h2 class="section-title">服务项目</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-user-md"></i>
+                <h3>个人营养咨询</h3>
+                <p>为您提供个性化的营养评估和咨询服务，根据您的年龄、性别、健康状况、生活习惯等因素，制定科学合理的饮食计划。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-baby"></i>
+                <h3>儿童营养指导</h3>
+                <p>针对儿童的生长发育特点，提供专业的营养指导，帮助儿童建立健康的饮食习惯，促进身心健康发展。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-heartbeat"></i>
+                <h3>慢性病营养调理</h3>
+                <p>为患有高血压、糖尿病、高血脂、肥胖等慢性病的人群提供专业的营养调理方案，帮助控制病情，提高生活质量。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-dumbbell"></i>
+                <h3>运动营养指导</h3>
+                <p>为运动员和健身爱好者提供专业的运动营养指导，帮助提高运动表现，促进运动后恢复。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-pregnant-woman"></i>
+                <h3>孕产妇营养指导</h3>
+                <p>为孕妇和哺乳期妇女提供专业的营养指导，确保母婴健康，促进胎儿和婴儿的生长发育。</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-university"></i>
+                <h3>营养知识培训</h3>
+                <p>开展各种形式的营养知识培训活动，包括讲座、 workshop、在线课程等，普及科学的营养知识。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 专家团队 -->
+    <section id="experts" class="section experts">
+        <h2 class="section-title">专家团队</h2>
+        <div class="experts-grid">
+            <div class="expert-card">
+                <div class="expert-image">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="张教授">
+                </div>
+                <h3>张教授</h3>
+                <div class="title">首席营养师</div>
+                <p>营养学博士，从事营养研究和临床工作20余年，具有丰富的专业知识和临床经验，擅长慢性病的营养调理和健康管理。</p>
+            </div>
+            <div class="expert-card">
+                <div class="expert-image">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="李医生">
+                </div>
+                <h3>李医生</h3>
+                <div class="title">资深营养师</div>
+                <p>注册营养师，从事临床营养工作15年，擅长儿童营养、孕产妇营养和运动营养，曾为多位知名运动员提供营养指导。</p>
+            </div>
+            <div class="expert-card">
+                <div class="expert-image">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="王营养师">
+                </div>
+                <h3>王营养师</h3>
+                <div class="title">营养顾问</div>
+                <p>营养学硕士，注册营养师，擅长个人营养咨询和健康管理，曾帮助数百位客户实现健康目标。</p>
+            </div>
+            <div class="expert-card">
+                <div class="expert-image">
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="赵讲师">
+                </div>
+                <h3>赵讲师</h3>
+                <div class="title">营养讲师</div>
+                <p>营养学硕士，资深营养讲师，拥有丰富的培训经验，擅长将复杂的营养知识以通俗易懂的方式传授给大众。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 客户评价 -->
+    <section id="testimonials" class="section testimonials">
+        <h2 class="section-title">客户评价</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="quote">
+                    "通过张教授的营养指导，我的血压和血糖都得到了很好的控制，身体状况明显改善。非常感谢营养学官网的专业服务！"
+                </div>
+                <div class="author">- 王先生，65岁</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="quote">
+                    "李医生为我的孩子制定的营养计划非常有效，孩子的食欲和体质都有了很大的提高。强烈推荐营养学官网的儿童营养指导服务！"
+                </div>
+                <div class="author">- 刘女士，32岁</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="quote">
+                    "在王营养师的帮助下，我成功减重20斤，而且保持了健康的饮食习惯。现在我感觉精力充沛，整个人都充满了活力！"
+                </div>
+                <div class="author">- 陈女士，28岁</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="section contact">
+        <h2 class="section-title">联系我们</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>联系方式</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h4>地址</h4>
+                        <p>北京市朝阳区健康路123号营养大厦</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h4>电话</h4>
+                        <p>400-123-4567</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>邮箱</h4>
+                        <p>info@nutrition.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <h4>营业时间</h4>
+                        <p>周一至周五：9:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <h3>发送消息</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">主题</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">消息</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">发送消息</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>营养学官网</h3>
+                <p>专业的营养指导，科学的饮食建议，让您拥有健康的身体和美好的生活。</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <a href="#home">首页</a>
+                <a href="#about">关于我们</a>
+                <a href="#knowledge">营养知识</a>
+                <a href="#services">服务项目</a>
+                <a href="#experts">专家团队</a>
+                <a href="#testimonials">客户评价</a>
+                <a href="#contact">联系我们</a>
+            </div>
+            <div class="footer-section">
+                <h3>服务项目</h3>
+                <a href="#">个人营养咨询</a>
+                <a href="#">儿童营养指导</a>
+                <a href="#">慢性病营养调理</a>
+                <a href="#">运动营养指导</a>
+                <a href="#">孕产妇营养指导</a>
+                <a href="#">营养知识培训</a>
+            </div>
+            <div class="footer-section">
+                <h3>联系我们</h3>
+                <p>北京市朝阳区健康路123号营养大厦</p>
+                <p>电话：400-123-4567</p>
+                <p>邮箱：info@nutrition.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 营养学官网. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // 表单提交
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢您的留言！我们将尽快与您联系。');
+            this.reset();
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
+            } else {
+                header.style.backgroundColor = '#2c3e50';
+            }
+        });
+    </script>
+</body>
+</html>
