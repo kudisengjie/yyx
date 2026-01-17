@@ -1,0 +1,12 @@
+# robots.txt for 营养学官网
+# 允许所有搜索引擎爬取网站
+
+User-agent: *
+Allow: /
+
+# 可以根据需要添加禁止爬取的目录或文件
+# Disallow: /private/
+# Disallow: /admin/
+
+# 网站地图（可选，根据实际情况添加）
+# Sitemap: https://www.example.com/sitemap.xml
